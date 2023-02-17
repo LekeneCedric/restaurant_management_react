@@ -7,5 +7,7 @@ export const ICON = {
     commande_sharp:"basket-sharp",
     next: "chevron-forward-outline",
     filter:"funnel-outline",
-    search:"search-outline"
+    search:"search-outline",
+    add:"add-outline",
+    remove:"remove-outline"
 }

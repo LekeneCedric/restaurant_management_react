@@ -20,7 +20,7 @@ export const Menus = ({navigation,route})=>{
                         />
                         <TextInput
                             style={{ flex:5 }}
-                            placeholder="search contact"
+                            placeholder="Rechercher un menu"
                             keyboardType='ascii-capable'
                             cursorColor={COLOR.color1}
                             onChangeText={new_search=>setSearch(new_search)}
@@ -111,11 +111,10 @@ export const Menus = ({navigation,route})=>{
     ]
     return (
         <View style={Styles.container}>
-            <ScrollView>
                 <FlatList
                     data={DATA}
                     renderItem={({item})=>(
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('detail_menu')}}>
                             <View style={Styles.card}>
                                 <Image source={require("../../../assets/images/menu_1.jpg")} style={Styles.card_img}/>
                                 <View style={Styles.card_detail_section}>
@@ -128,8 +127,6 @@ export const Menus = ({navigation,route})=>{
                     )}
                 />
             
-            </ScrollView>
-            
         </View>
     )
 }
@@ -140,6 +137,7 @@ const Styles = StyleSheet.create({
         backgroundColor:COLOR.color2
     },
     card:{
+        alignItems:'center',
         backgroundColor:COLOR.light,
         height:verticalScale(150),
         padding:horizontalScale(15),
