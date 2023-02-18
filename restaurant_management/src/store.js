@@ -16,11 +16,17 @@ export const panierStore   = create((set)=>(
         removeProduit : (new_store)=>set((state)=>(
             new_store
         )),
+        clearStore : ()=>set((state)=>(
+            ({
+                produit:[],// plat 
+                panier_produit : [],// id_plat
+                quantite_produit:[],//quantite
+            }))),
         incrementProduit : (new_tab)=>set((state)=>
             ({
-                produit:[...state.produit],
-                panier_produit : [...state.panier_produit],
-                quantite_produit:new_tab
+                produit:[...state.produit],// plat 
+                panier_produit : [...state.panier_produit],// id_plat
+                quantite_produit:new_tab,//quantite
             })),
         decrementProduit : (new_tab)=>set((state)=>
             ({
@@ -28,5 +34,16 @@ export const panierStore   = create((set)=>(
                 panier_produit : [...state.panier_produit],
                 quantite_produit:new_tab
             }))
+    }
+))
+
+export const userRoleStore = create ( (set)=>(
+    {
+        user_role:'',
+        set_role : (role)=>set(()=>(
+            {
+                user_role : role
+            }
+        ))
     }
 ))

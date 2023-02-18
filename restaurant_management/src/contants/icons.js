@@ -12,5 +12,9 @@ export const ICON = {
     remove:"remove-outline",
     valid : "checkmark-outline",
     add_plat_outline : "restaurant-outline",
-    add_plat_sharp : "restaurant-sharp"
+    add_plat_sharp : "restaurant-sharp",
+    archive_outline : "archive-outline",
+    archive_sharp : "archive-sharp",
+    delete_trash : "trash-bin-outline",
+    close : "close-outline"
 }

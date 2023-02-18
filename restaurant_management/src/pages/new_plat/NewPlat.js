@@ -14,18 +14,20 @@ export const NewPlat = ({navigation,route})=>{
                        addPlat()
                     }}
                     style={{ backgroundColor:COLOR.color1,padding:horizontalScale(10),marginRight:horizontalScale(3),borderRadius:moderateScale(100)
-                    
                     }}>
                     <Text style={{ color:COLOR.color2 }}>Enregistrer</Text>
                 </TouchableOpacity>
             )
         })
     },[navigation])
-            const [name,setName] = useState("");
-            const [prixUnitaire,setPrixUnitaire] = useState(0);
-            const [isDisponible,setIsDisponible] = useState(false);
-            const [description,setDescription] = useState("");
-            
+            var name ;
+            var prixUnitaire;
+            var isDisponible;
+            var description;
+            // const [name,setName] = useState("");
+            // const [prixUnitaire,setPrixUnitaire] = useState(0);
+            // const [isDisponible,setIsDisponible] = useState(false);
+            // const [description,setDescription] = useState("");
             const addPlat = ()=>{
                 const data = {
                     nom : name,
@@ -40,10 +42,14 @@ export const NewPlat = ({navigation,route})=>{
                 PlatController.createPlats(data)
                 .then((res)=>{
                     console.log(res.data)
-                    setName("")
-                    setDescription("")
-                    setPrixUnitaire(0)
-                    setIsDisponible(true)
+                    // setName("")
+                    // setDescription("")
+                    // setPrixUnitaire(0)
+                    // setIsDisponible(true)
+                    name = "";
+                    description = "";
+                    prixUnitaire = 0 ; 
+                    isDisponible = false;
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -57,17 +63,19 @@ export const NewPlat = ({navigation,route})=>{
                         style={{ borderWidth:0.5,padding:horizontalScale(10),borderColor:COLOR.color2,marginBottom:verticalScale(10) }}
                         value={name}
                         placeholder="entrez le nom"
-                        onChangeText={(name)=>{setName(name)}}
+                        onChangeText={(val)=>{name=val}}
                     />
                     <TextInput
                         style={{ borderWidth:0.5,padding:horizontalScale(10),borderColor:COLOR.color2,marginBottom:verticalScale(10) }}
                         value={prixUnitaire}
                         placeholder="entrez le prixUnitaire"
-                        onChangeText={prix=>setPrixUnitaire(prix)}
+                        onChangeText={val=>{prixUnitaire = val}}
                     />
                     <RNPickerSelect
                         style={{ borderWidth:0.5,padding:horizontalScale(10),borderColor:COLOR.color2,marginBottom:verticalScale(10) }}
-                        onValueChange={(value) => setIsDisponible(value)}
+                        onValueChange={(value) => { 
+                            isDisponible = value
+                        }}
                         items={[
                             { label: "Oui", value: true },
                             { label: "Non", value: false },
@@ -77,7 +85,7 @@ export const NewPlat = ({navigation,route})=>{
                         style={{ borderWidth:0.5,padding:horizontalScale(10),borderColor:COLOR.color2,marginBottom:verticalScale(10) }}
                         value={description}
                         placeholder = "Description"
-                        onChangeText={desc => setDescription(desc)}
+                        onChangeText={desc => {description = desc}}
                     />
                </View>
             </View>

@@ -30,80 +30,6 @@ export const Menus = ({navigation,route})=>{
         })
         setMenus(new_menu)
     },[search])
-    const DATA = [
-        {
-            image:'../../../assets/images/menu_1.jpg',
-            title:"Alaska",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_2.jpg',
-            title:"Biftech",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_3.jpg',
-            title:"Legumes",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_1.jpg',
-            title:"Alaska",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_2.jpg',
-            title:"Biftech",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_3.jpg',
-            title:"Legumes",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },{
-            image:'../../../assets/images/menu_1.jpg',
-            title:"Alaska",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_2.jpg',
-            title:"Biftech",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_3.jpg',
-            title:"Legumes",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },{
-            image:'../../../assets/images/menu_1.jpg',
-            title:"Alaska",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_2.jpg',
-            title:"Biftech",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_3.jpg',
-            title:"Legumes",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },{
-            image:'../../../assets/images/menu_1.jpg',
-            title:"Alaska",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_2.jpg',
-            title:"Biftech",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        },
-        {
-            image:'../../../assets/images/menu_3.jpg',
-            title:"Legumes",
-            description:"Salomon,cream,cheese,avocado,cucumber"
-        }
-    ]
     return (
         <View style={Styles.container}>
             <View style={[Styles.searchBar,{width:horizontalScale(340)}]}>
@@ -150,8 +76,7 @@ const Styles = StyleSheet.create({
     container:{
         paddingHorizontal:horizontalScale(5),
         paddingTop:verticalScale(5),
-        backgroundColor:COLOR.color2,
-        height:verticalScale(1200)
+        backgroundColor:COLOR.color2
     },
     card:{
         alignItems:'center',
