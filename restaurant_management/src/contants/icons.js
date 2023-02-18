@@ -9,5 +9,8 @@ export const ICON = {
     filter:"funnel-outline",
     search:"search-outline",
     add:"add-outline",
-    remove:"remove-outline"
+    remove:"remove-outline",
+    valid : "checkmark-outline",
+    add_plat_outline : "restaurant-outline",
+    add_plat_sharp : "restaurant-sharp"
 }

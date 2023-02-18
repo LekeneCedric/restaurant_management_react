@@ -3,6 +3,8 @@ import { COLOR } from "../../contants/color"
 import { horizontalScale, moderateScale, verticalScale } from "../../theme/Metric"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ICON } from "../../contants/icons";
+import { useState } from "react";
+import { panierStore } from "../../store";
 
 
 const DATA = [
@@ -83,38 +85,59 @@ const DATA = [
     },
 ]
 export const DetailMenu = ({navigation,route})=>{
+    const [plats,setPlats] = useState(route.params.plats)
+    const [produit,addProduit,panier_produit,quantite_produit,removeProduit] = panierStore((store)=>[store.produit,store.addProduit,store.panier_produit,store.quantite_produit,store.removeProduit])
+
     return(
         <View style={Styles.container}>
             <View style={Styles.menu}>
                 <Image style={Styles.image_menu} source={require("../../../assets/images/menu_1.jpg")}/>
                 <View style={Styles.about}>
-                    <Text style={Styles.menuTitle}>About</Text>
+                    <Text style={Styles.menuTitle}>A propos</Text>
                     <Text style={Styles.menuDetail}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
                 </View>
                 <View style={Styles.menu_title_section}>
-                    <Text style={Styles.menuTitle}>Menu</Text>
+                    <Text style={Styles.menuTitle}>Liste plats</Text>
                     <Text style={Styles.menuDetail}><Text style={{ fontWeight:'bold' }}>24</Text> Plats</Text>
                 </View>
             </View> 
             <FlatList
-                            data={DATA}
+                            data={plats}
                             renderItem={({item})=>(
-                                <View style={ Styles.card}>
+                                <View style={ [Styles.card,{opacity:item.isDisponible?1:0.5}]}>
                                     <Image source={require("../../../assets/images/menu_1.jpg")} style={Styles.card_image}/>
                                     <View style={Styles.card_description}>
-                                        <Text style={Styles.card_description_price}> $ 540</Text>
-                                        <Text style={Styles.card_description_name}>Chicken nooble</Text>
-                                        <Text style={Styles.card_description_details}>300g - 150 kcal</Text>
+                                        <Text style={Styles.card_description_price}> FCFA {item.prixUnitaire}</Text>
+                                        <Text style={Styles.card_description_name}>{item.nom}</Text>
+                                        <Text style={Styles.card_description_details}>{item.description}</Text>
                                     </View>
                                     <View style={Styles.card_counter}>
-                                        <TouchableOpacity>
+                            {
+                                panier_produit.includes(item.id)==true
+                                ?
+                                (
+                                    <TouchableOpacity onPress={()=>{
+                                        let qte = quantite_produit;
+                                        qte.splice(panier_produit.indexOf(item.id),1)
+                                            let new_store = {
+                                                produit : produit.filter((prod)=>{return (prod.id!=item.id)}),
+                                                panier_produit : panier_produit.filter(id=>{return (id!=item.id)}),
+                                                quantite_produit : qte
+                                            }
+                                            removeProduit(new_store)
+                                    }}>
+                                        <Ionicons name={ICON.valid} size={moderateScale(20)}/>
+                                    </TouchableOpacity>
+                                )
+                                :
+                                (
+                                    <TouchableOpacity onPress={()=>{addProduit(item,item.id)}}>
                                         <Ionicons name={ICON.add} size={moderateScale(20)}/>
-                                        </TouchableOpacity>
-                                        <Text style={Styles.count_number}>0</Text>
-                                        <TouchableOpacity>
-                                        <Ionicons name={ICON.remove} size={moderateScale(20)}/>
-                                        </TouchableOpacity>        
-                                    </View>
+                                    </TouchableOpacity>
+                                )
+                            }
+                            
+                        </View>
                                 </View>
                                 )}
                         />
@@ -143,7 +166,7 @@ const Styles = StyleSheet.create({
     menuTitle:{
         fontWeight:'700',
         color:COLOR.color1,
-        fontSize:moderateScale(25)
+        fontSize:moderateScale(22)
     },
     menuDetail:{
         color:COLOR.color1,

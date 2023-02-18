@@ -3,38 +3,33 @@ import { COLOR } from "../../contants/color"
 import { horizontalScale, moderateScale, verticalScale } from "../../theme/Metric"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ICON } from "../../contants/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { MenusController } from "../../controllers/menusController/menusController";
 
 export const Menus = ({navigation,route})=>{
-
-    useState(()=>{
+    const [menus,setMenus] = useState([]);
+    const [menusTemp,setMenusTemps] = useState([]);
+    const [search,setSearch] = useState("")
+    useEffect(()=>{
+        
         navigation.setOptions({
-            headerTitle:(props)=>(
-                
-                    <View style={[Styles.searchBar,{width:horizontalScale(340)}]}>
-                        <Ionicons
-                            style={{ flex:1,alignSelf:'center',textAlign:'center' }}
-                            name={ICON.search}
-                            size={horizontalScale(20)}
-                            color={COLOR.color1}
-                        />
-                        <TextInput
-                            style={{ flex:5 }}
-                            placeholder="Rechercher un menu"
-                            keyboardType='ascii-capable'
-                            cursorColor={COLOR.color1}
-                            onChangeText={new_search=>setSearch(new_search)}
-                            />
-                        <Ionicons
-                            style={{ flex:1,textAlign:'center',alignSelf:'center', }}
-                            name={ICON.filter}
-                            size={horizontalScale(20)}
-                            color={COLOR.color1}
-                        />
-                    </View>
-            )
+            headerShown:false
         })
     },[navigation])
+    useEffect(()=>{
+        MenusController.getMenus()
+        .then((res)=>{
+            setMenus(res.data)
+            setMenusTemps(res.data)
+        })
+    },[])
+    useEffect(()=>{
+        console.log('search')
+        let new_menu = menusTemp.filter((menu)=>{
+            return menu.nomMenu.toLowerCase().includes(search.toLowerCase())
+        })
+        setMenus(new_menu)
+    },[search])
     const DATA = [
         {
             image:'../../../assets/images/menu_1.jpg',
@@ -111,15 +106,36 @@ export const Menus = ({navigation,route})=>{
     ]
     return (
         <View style={Styles.container}>
+            <View style={[Styles.searchBar,{width:horizontalScale(340)}]}>
+                        <Ionicons
+                            style={{ flex:1,alignSelf:'center',textAlign:'center'}}
+                            name={ICON.search}
+                            size={horizontalScale(20)}
+                            color={COLOR.color1}
+                        />
+                        <TextInput
+                            value={search}
+                            style={{ flex:5 }}
+                            placeholder="Rechercher un menu"
+                            cursorColor={COLOR.color1}
+                            onChangeText={search=>setSearch(search)}
+                            />
+                        <Ionicons
+                            style={{ flex:1,textAlign:'center',alignSelf:'center'}}
+                            name={ICON.filter}
+                            size={horizontalScale(20)}
+                            color={COLOR.color1}
+                        />
+                    </View>
                 <FlatList
-                    data={DATA}
+                    data={menus}
                     renderItem={({item})=>(
-                        <TouchableOpacity onPress={()=>{navigation.navigate('detail_menu')}}>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('detail_menu',{plats:item.plats})}}>
                             <View style={Styles.card}>
                                 <Image source={require("../../../assets/images/menu_1.jpg")} style={Styles.card_img}/>
                                 <View style={Styles.card_detail_section}>
-                                    <Text style={Styles.card_detail_section_title}> {item.title}</Text>
-                                    <Text style={Styles.card_detail_section_description}>{item.description}</Text>
+                                    <Text style={Styles.card_detail_section_title}> {item.nomMenu}</Text>
+                                    <Text style={Styles.card_detail_section_description}>Salomon,cream,cheese,avocado,cucumber</Text>
                                     <Ionicons style={Styles.card_detail_section_icon} name={ICON.next} size={moderateScale(20)}/>
                                 </View>
                             </View>
@@ -134,7 +150,8 @@ const Styles = StyleSheet.create({
     container:{
         paddingHorizontal:horizontalScale(5),
         paddingTop:verticalScale(5),
-        backgroundColor:COLOR.color2
+        backgroundColor:COLOR.color2,
+        height:verticalScale(1200)
     },
     card:{
         alignItems:'center',
@@ -167,7 +184,8 @@ const Styles = StyleSheet.create({
         fontWeight:'200',
         fontSize:moderateScale(16),
         marginBottom:verticalScale(5),
-        overflow:'scroll'
+        overflow:'scroll',
+        paddingLeft:horizontalScale(5)
     },
     card_detail_section_icon:{
         position:'absolute',
